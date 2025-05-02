@@ -16,6 +16,13 @@ export default function Home() {
   const [betaModalOpen, setBetaModalOpen] = useState(false);
   const [waitlistCount, setWaitlistCount] = useState<number>(0);
 
+  const nftAvatars = [
+    "https://i.seadn.io/gae/H8jOCJuQokNqGBpkBN5wk1oZwO7LM8bNnrHCaekV2nKjnCqw6UB5oaH8XyNeBDj6bA_n1mjejzhFQUP3O1NfjFLHr3FOaeHcTOOT?auto=format&dpr=1&w=256",
+    "https://i.seadn.io/gae/Ju9CkWtV-1Okvf45wo8UctR-M9He2PjILP0oOvxE89AyiPPGtrR3gysu1Zgy0hjd2xKIgjJJtWIc0ybj4Vd7wv8t3pxDGHoJBzDB?auto=format&dpr=1&w=256",
+    "https://i.seadn.io/gae/7B0qai02OdHA8P_EOVK672qUliyjQdQDGNrACxs7WnTgZAkJa_wWURnIFKeOh5VTf8cfTqW3wQpozGedaC9mteKphEOtztls02RlWQ?auto=format&dpr=1&w=256",
+    "https://i.seadn.io/gae/yIm-M5-BpSDdTEIJRt5D6xphizhIdozXjqSITgK4phWq7MmAU3qE7Nw7POGCiPGyhtJ3ZFP8iJ29TFl-RLcGBWX5qI4-ZcnCPcsY4zI?auto=format&dpr=1&w=256",
+  ];
+
   // Fetch waitlist count
   useEffect(() => {
     fetch('/api/beta-signup')
@@ -120,11 +127,15 @@ export default function Home() {
             {/* Waitlist indicator */}
             <div className="mt-8 flex items-center gap-3">
               <div className="flex -space-x-2">
-                {[...Array(5)].map((_, i) => (
-                  <Avatar key={i} className="border-2 border-[#0c0c10] w-8 h-8 bg-gradient-to-br from-[#14F195]/20 to-[#9945FF]/20">
-                    <AvatarFallback className="bg-gradient-to-br from-[#14F195]/10 to-[#9945FF]/10 text-white/70 text-xs">
-                      {String.fromCharCode(65 + i)}
-                    </AvatarFallback>
+                {nftAvatars.map((avatar, i) => (
+                  <Avatar key={i} className="border-2 border-[#0c0c10] w-8 h-8">
+                    <Image
+                      src={avatar}
+                      alt={`NFT Avatar ${i + 1}`}
+                      width={32}
+                      height={32}
+                      className="rounded-full object-cover"
+                    />
                   </Avatar>
                 ))}
               </div>

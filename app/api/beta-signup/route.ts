@@ -1,62 +1,39 @@
 import { NextResponse } from 'next/server';
-import clientPromise from '@/lib/mongodb';
+import connectDB from '@/lib/mongodb';
+import Waitlist from '@/models/Waitlist';
 
 export async function GET() {
-  try {
-    const client = await clientPromise;
-    const db = client.db('learn-sol');
-    const betaSignups = db.collection('beta-signups');
-    
-    const count = await betaSignups.countDocuments();
-    return NextResponse.json({ count });
-  } catch (error) {
-    console.error('Error getting waitlist count:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
+    try {
+        await connectDB();
+        const count = await Waitlist.countDocuments();
+        console.log('Waitlist count:', count);
+        return NextResponse.json({ count });
+    } catch (error) {
+        console.error('Error getting waitlist count:', error);
+        return NextResponse.json({ error: 'Failed to get waitlist count' }, { status: 500 });
+    }
 }
 
-export async function POST(req: Request) {
-  try {
-    const { firstName, lastName, email, country } = await req.json();
+export async function POST(request: Request) {
+    try {
+        const { email } = await request.json();
+        await connectDB();
+        
+        const existingEntry = await Waitlist.findOne({ email });
+        if (existingEntry) {
+            return NextResponse.json(
+                { error: 'Email already registered' },
+                { status: 400 }
+            );
+        }
 
-    if (!firstName || !lastName || !email || !country) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      );
+        await Waitlist.create({ email });
+        return NextResponse.json({ message: 'Successfully added to waitlist' });
+    } catch (error) {
+        console.error('Error adding to waitlist:', error);
+        return NextResponse.json(
+            { error: 'Failed to add to waitlist' },
+            { status: 500 }
+        );
     }
-
-    const client = await clientPromise;
-    const db = client.db('learn-sol');
-    const betaSignups = db.collection('beta-signups');
-
-    // Check if email already exists
-    const existingUser = await betaSignups.findOne({ email });
-    if (existingUser) {
-      return NextResponse.json(
-        { error: 'Email already registered' },
-        { status: 400 }
-      );
-    }
-
-    // Insert new signup
-    await betaSignups.insertOne({
-      firstName,
-      lastName,
-      email,
-      country,
-      createdAt: new Date()
-    });
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Beta signup error:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
 }
