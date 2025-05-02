@@ -1,7 +1,7 @@
 # <div align="center">learn.sol</div>
 
 <div align="center">
-  <img src="app/favicon.ico" alt="Learn SOL Logo" width="120" />
+  <img src="app/icon.ico" alt="Learn SOL Logo" width="120" />
   
   <p>Your gateway to Solana blockchain development</p>
 
@@ -49,7 +49,7 @@ Visit `http://localhost:3000` to see the application in action.
 ## 📸 Preview
 
 <div align="center">
-  <img src="public/og-image.png" alt="Learn SOL Preview" width="600" />
+  <img src="public/opengraph-image.png" alt="Learn SOL Preview" width="600" />
 </div>
 
 ## 🤝 Contributing
@@ -74,6 +74,4 @@ Special thanks to:
 ## 🔗 Links
 
 - [Live Demo](https://learnsol.site)
-- [Documentation](#)
-- [Community Discord](#)
-- [Twitter](#)
+- [Twitter](https://x.com/some1uknow25)
