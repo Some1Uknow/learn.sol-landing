@@ -5,14 +5,28 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import FeatureCard from "@/components/feature-card";
 import RoadmapItem from "@/components/roadmap-item";
 import AIAnimation from "@/components/ai-animation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BetaSignupModal } from "@/components/beta-signup-modal";
 
 export default function Home() {
   const [betaModalOpen, setBetaModalOpen] = useState(false);
+  const [waitlistCount, setWaitlistCount] = useState<number>(0);
+
+  // Fetch waitlist count
+  useEffect(() => {
+    fetch('/api/beta-signup')
+      .then(res => res.json())
+      .then(data => {
+        if (data.count !== undefined) {
+          setWaitlistCount(data.count);
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#0c0c10] text-white">
@@ -102,6 +116,25 @@ export default function Home() {
                 Learn More <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
+
+            {/* Waitlist indicator */}
+            <div className="mt-8 flex items-center gap-3">
+              <div className="flex -space-x-2">
+                {[...Array(5)].map((_, i) => (
+                  <Avatar key={i} className="border-2 border-[#0c0c10] w-8 h-8 bg-gradient-to-br from-[#14F195]/20 to-[#9945FF]/20">
+                    <AvatarFallback className="bg-gradient-to-br from-[#14F195]/10 to-[#9945FF]/10 text-white/70 text-xs">
+                      {String.fromCharCode(65 + i)}
+                    </AvatarFallback>
+                  </Avatar>
+                ))}
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-2 w-2 rounded-full bg-[#14F195] animate-pulse"></div>
+                <span className="text-white/70">
+                  <span className="font-semibold text-white">{waitlistCount.toLocaleString()}</span> developers joined
+                </span>
+              </div>
+            </div>
           </div>
           <div className="flex justify-center">
             <AIAnimation />
@@ -186,18 +219,18 @@ export default function Home() {
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center font-space-grotesk">
             Get Early Access
           </h2>
-          <p className="text-white/70 text-center mb-8">
-            Get early access when we launch — limited seats.
+          <p className="text-white/70 text-center mb-4">
+            Join {waitlistCount.toLocaleString()} others on the waitlist — limited seats.
           </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto items-center justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto items-center justify-center">
             <Button
               className="bg-gradient-to-r from-[#14F195] to-[#9945FF] hover:opacity-90 text-black px-6 py-3 rounded-lg text-lg font-semibold shadow-lg transform transition-transform hover:scale-105"
               onClick={() => setBetaModalOpen(true)}
             >
               Join Waitlist
             </Button>
-            </div>
+          </div>
         </div>
       </section>
 
@@ -223,7 +256,9 @@ export default function Home() {
               {/* Social Links */}
               <div className="flex items-center gap-4 border-r border-white/10 pr-12">
                 <Link
-                  href=""
+                  href="https://x.com/Some1UKnow25"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-white/70 hover:text-white transition-colors"
                 >
                   <svg
@@ -240,7 +275,9 @@ export default function Home() {
                   </svg>
                 </Link>
                 <Link
-                  href="#"
+                  href="https://github.com/some1uknow/learn.sol"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-white/70 hover:text-white transition-colors"
                 >
                   <svg
@@ -258,7 +295,7 @@ export default function Home() {
                   </svg>
                 </Link>
                 <Link
-                  href="#"
+                  href="mailto:raghu250407@gmail.com"
                   className="text-white/70 hover:text-white transition-colors"
                 >
                   <svg
@@ -271,7 +308,8 @@ export default function Home() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   >
-                    <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                    <rect width="20" height="16" x="2" y="4" rx="2"/>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
                   </svg>
                 </Link>
               </div>

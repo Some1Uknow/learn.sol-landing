@@ -1,6 +1,23 @@
 import { NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
 
+export async function GET() {
+  try {
+    const client = await clientPromise;
+    const db = client.db('learn-sol');
+    const betaSignups = db.collection('beta-signups');
+    
+    const count = await betaSignups.countDocuments();
+    return NextResponse.json({ count });
+  } catch (error) {
+    console.error('Error getting waitlist count:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
+}
+
 export async function POST(req: Request) {
   try {
     const { firstName, lastName, email, country } = await req.json();
