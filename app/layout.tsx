@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     creator: "@learn_sol",
   },
   icons: {
-    icon: "./favicon.png",
+    icon: "/favicon.png",
     shortcut: "/favicon.png",
     apple: "/apple-touch-icon.png",
   },
