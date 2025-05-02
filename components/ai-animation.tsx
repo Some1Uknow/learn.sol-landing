@@ -1,9 +1,86 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export default function AIAnimation() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [currentStep, setCurrentStep] = useState(0)
+  const [userTyping, setUserTyping] = useState(false)
+  const [aiTyping, setAiTyping] = useState(false)
+  const [userText, setUserText] = useState("")
+  const [aiText, setAiText] = useState("")
+
+  const userMessage = "How do I start a Solana project?"
+  const aiResponse = `First, install the Solana CLI:
+$ sh -c "$(curl -sSfL https://release.solana.com/v1.17.0/install)"
+
+Then create a new project:
+$ solana-keygen new
+$ mkdir my-solana-project
+$ cd my-solana-project
+$ npm init -y
+$ npm install @solana/web3.js`
+
+  useEffect(() => {
+    // Animation timeline
+    const timeline = [
+      // Step 0: Show empty chat
+      () => {
+        setTimeout(() => {
+          setCurrentStep(1)
+        }, 1000)
+      },
+      // Step 1: User starts typing
+      () => {
+        setUserTyping(true)
+        let i = 0
+        const typeInterval = setInterval(() => {
+          if (i <= userMessage.length) {
+            setUserText(userMessage.substring(0, i))
+            i++
+          } else {
+            clearInterval(typeInterval)
+            setUserTyping(false)
+            setTimeout(() => {
+              setCurrentStep(2)
+            }, 500)
+          }
+        }, 70)
+      },
+      // Step 2: AI starts typing
+      () => {
+        setAiTyping(true)
+        setTimeout(() => {
+          setCurrentStep(3)
+        }, 1500)
+      },
+      // Step 3: AI responds
+      () => {
+        setAiTyping(false)
+        let i = 0
+        const typeInterval = setInterval(() => {
+          if (i <= aiResponse.length) {
+            setAiText(aiResponse.substring(0, i))
+            i++
+          } else {
+            clearInterval(typeInterval)
+            setTimeout(() => {
+              setCurrentStep(4)
+            }, 3000)
+          }
+        }, 10)
+      },
+      // Step 4: Reset animation
+      () => {
+        setUserText("")
+        setAiText("")
+        setCurrentStep(0)
+      },
+    ]
+
+    // Start the animation
+    timeline[currentStep]()
+  }, [currentStep])
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -95,74 +172,11 @@ export default function AIAnimation() {
       particles.push(new Particle(x, y, radius, color))
     }
 
-    // Draw chat bubble
-    const drawChatBubble = () => {
-      if (!ctx || !canvas) return
-
-      const width = canvas.width / window.devicePixelRatio
-      const height = canvas.height / window.devicePixelRatio
-
-      // Draw main bubble
-      const bubbleWidth = width * 0.8
-      const bubbleHeight = height * 0.6
-      const bubbleX = width / 2 - bubbleWidth / 2
-      const bubbleY = height / 2 - bubbleHeight / 2
-
-      ctx.save()
-      ctx.beginPath()
-      ctx.roundRect(bubbleX, bubbleY, bubbleWidth, bubbleHeight, 16)
-      ctx.fillStyle = "rgba(255, 255, 255, 0.05)"
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.1)"
-      ctx.lineWidth = 1
-      ctx.fill()
-      ctx.stroke()
-
-      // Draw typing indicator
-      const dotRadius = 4
-      const dotSpacing = 8
-      const startX = width / 2 - dotSpacing * 2
-      const startY = height / 2
-
-      for (let i = 0; i < 3; i++) {
-        ctx.beginPath()
-        ctx.arc(startX + i * dotSpacing * 2, startY, dotRadius, 0, Math.PI * 2)
-        ctx.fillStyle = i === 0 ? "#14F195" : i === 1 ? "#9945FF" : "#00C2FF"
-        ctx.fill()
-      }
-
-      // Draw code snippet
-      const codeX = bubbleX + 20
-      const codeY = bubbleY + 20
-      const codeWidth = bubbleWidth - 40
-      const codeHeight = 60
-
-      ctx.beginPath()
-      ctx.roundRect(codeX, codeY, codeWidth, codeHeight, 8)
-      ctx.fillStyle = "rgba(0, 0, 0, 0.3)"
-      ctx.fill()
-
-      // Draw code lines
-      const lineHeight = 10
-      const lineY = codeY + 15
-
-      for (let i = 0; i < 3; i++) {
-        const lineWidth = Math.random() * 100 + 50
-        ctx.beginPath()
-        ctx.roundRect(codeX + 15, lineY + i * 15, lineWidth, lineHeight, 2)
-        ctx.fillStyle = "rgba(255, 255, 255, 0.2)"
-        ctx.fill()
-      }
-
-      ctx.restore()
-    }
-
     // Animation loop
     const animate = () => {
       if (!ctx || !canvas) return
 
       ctx.clearRect(0, 0, canvas.width / window.devicePixelRatio, canvas.height / window.devicePixelRatio)
-
-      drawChatBubble()
 
       particles.forEach((particle) => {
         particle.update()
@@ -180,7 +194,72 @@ export default function AIAnimation() {
 
   return (
     <div className="relative w-full max-w-md aspect-square">
-      <canvas ref={canvasRef} className="w-full h-full rounded-xl" />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full rounded-xl" />
+
+      <div className="relative z-10 w-full h-full flex flex-col p-4">
+        <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl p-4 h-full flex flex-col">
+          {/* Chat header */}
+          <div className="flex items-center gap-2 pb-3 border-b border-white/10">
+            <div className="h-2 w-2 rounded-full bg-[#14F195]"></div>
+            <span className="text-white/80 text-sm font-medium">learn.sol AI Assistant</span>
+          </div>
+
+          {/* Chat messages */}
+          <div className="flex-1 overflow-y-auto py-4 space-y-4">
+            {userText && (
+              <div className="flex justify-end">
+                <div className="bg-[#9945FF]/20 border border-[#9945FF]/30 rounded-lg rounded-tr-none p-3 max-w-[80%]">
+                  <p className="text-sm text-white">{userText}</p>
+                </div>
+              </div>
+            )}
+
+            {(aiText || aiTyping) && (
+              <div className="flex justify-start">
+                <div className="bg-[#14F195]/10 border border-[#14F195]/30 rounded-lg rounded-tl-none p-3 max-w-[80%]">
+                  {aiTyping ? (
+                    <div className="flex gap-1 items-center h-6">
+                      <div className="h-2 w-2 rounded-full bg-[#14F195] animate-pulse"></div>
+                      <div className="h-2 w-2 rounded-full bg-[#9945FF] animate-pulse delay-100"></div>
+                      <div className="h-2 w-2 rounded-full bg-[#00C2FF] animate-pulse delay-200"></div>
+                    </div>
+                  ) : (
+                    <pre className="text-sm text-white font-mono whitespace-pre-wrap">{aiText}</pre>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Chat input */}
+          <div className="border-t border-white/10 pt-3">
+            <div className="flex items-center gap-2 bg-black/30 border border-white/10 rounded-lg px-3 py-2">
+              <input
+                type="text"
+                disabled
+                placeholder={userTyping ? "Typing..." : "Ask a question..."}
+                className="bg-transparent text-sm text-white/80 flex-1 outline-none placeholder:text-white/50"
+              />
+              <button className="text-[#14F195] rounded-md p-1 hover:bg-white/5">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m22 2-7 20-4-9-9-4Z" />
+                  <path d="M22 2 11 13" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
