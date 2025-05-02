@@ -1,30 +1,79 @@
-# Learn sol landing page
+# <div align="center">learn.sol</div>
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+<div align="center">
+  <img src="app/favicon.ico" alt="Learn SOL Logo" width="120" />
+  
+  <p>Your gateway to Solana blockchain development</p>
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/some1uknows-projects/v0-learn-sol-landing-page)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/fIx2KvpLQZd)
+  [![Solana Foundation](https://img.shields.io/badge/Funded%20by-Solana%20Foundation-14F195?style=for-the-badge)](https://solana.com)
+  [![CoinDCX](https://img.shields.io/badge/Funded%20by-CoinDCX-3366FF?style=for-the-badge)](https://coindcx.com)
 
-## Overview
+</div>
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+## 🚀 Overview
 
-## Deployment
+learn.sol is an innovative educational platform designed to onboard developers into the Solana ecosystem. Funded by the Solana Foundation and CoinDCX, in collaboration with Superteam IN, our mission is to make Solana development accessible, engaging, and rewarding for developers of all skill levels.
 
-Your project is live at:
+## ✨ Features
 
-**[https://vercel.com/some1uknows-projects/v0-learn-sol-landing-page](https://vercel.com/some1uknows-projects/v0-learn-sol-landing-page)**
+- 📚 Comprehensive Solana development curriculum
+- 💻 Interactive coding exercises
+- 🎯 Real-world project-based learning
+- 🤝 Community-driven learning environment
+- 🏆 Achievement system with rewards
 
-## Build your app
+## 🛠 Tech Stack
 
-Continue building your app on:
+- Next.js 15
+- TypeScript
+- Tailwind CSS
+- MongoDB
+- Shadcn UI Components
+- Vercel Deployment
 
-**[https://v0.dev/chat/projects/fIx2KvpLQZd](https://v0.dev/chat/projects/fIx2KvpLQZd)**
+## 🔥 Getting Started
 
-## How It Works
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/learn.sol.git
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+Visit `http://localhost:3000` to see the application in action.
+
+## 📸 Preview
+
+<div align="center">
+  <img src="public/og-image.png" alt="Learn SOL Preview" width="600" />
+</div>
+
+## 🤝 Contributing
+
+We welcome contributions from the community! Whether it's:
+
+- 🐛 Bug fixes
+- ✨ New features
+- 📚 Documentation improvements
+- 🎨 UI/UX enhancements
+
+Please read our contributing guidelines before submitting your PR.
+
+## 💫 Acknowledgments
+
+Special thanks to:
+- [Solana Foundation](https://solana.com) for their primary funding support
+- [CoinDCX](https://coindcx.com) for their funding support
+- [Superteam IN](https://superteam.fun/in) for their ecosystem support
+- Our amazing community of early adopters
+
+## 🔗 Links
+
+- [Live Demo](https://learnsol.site)
+- [Documentation](#)
+- [Community Discord](#)
+- [Twitter](#)

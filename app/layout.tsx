@@ -22,30 +22,21 @@ export const metadata: Metadata = {
   openGraph: {
     title: "learn.sol",
     description: "The first AI-assisted Solana learning and building platform",
-    url: "https://learnsol.site",
-    siteName: "learn.sol",
     images: [
       {
-        url: "https://learnsol.site/og-image.png",
+        url: "/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "learn.sol - AI-assisted Solana Learning Platform",
+        alt: "learn.sol",
       },
     ],
-    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "learn.sol",
     description: "The first AI-assisted Solana learning and building platform",
-    images: ["https://learnsol.site/og-image.png"],
-    creator: "@learn_sol",
-  },
-  icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon.png",
-    apple: "/apple-touch-icon.png",
+    images: ["/twitter-image.png"],
   },
 };
 
