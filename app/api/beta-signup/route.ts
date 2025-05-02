@@ -16,7 +16,28 @@ export async function GET() {
 
 export async function POST(request: Request) {
     try {
-        const { email } = await request.json();
+        const { firstName, lastName, email, country } = await request.json();
+
+        // Validate required fields
+        if (!firstName || !lastName || !email || !country) {
+            return NextResponse.json(
+                { 
+                    error: 'Missing required fields',
+                    required: ['firstName', 'lastName', 'email', 'country']
+                },
+                { status: 400 }
+            );
+        }
+
+        // Validate email format
+        const emailRegex = /^\S+@\S+\.\S+$/;
+        if (!emailRegex.test(email)) {
+            return NextResponse.json(
+                { error: 'Invalid email format' },
+                { status: 400 }
+            );
+        }
+
         await connectDB();
         
         const existingEntry = await Waitlist.findOne({ email });
@@ -27,8 +48,20 @@ export async function POST(request: Request) {
             );
         }
 
-        await Waitlist.create({ email });
-        return NextResponse.json({ message: 'Successfully added to waitlist' });
+        const newEntry = await Waitlist.create({
+            firstName,
+            lastName,
+            email: email.toLowerCase(),
+            country
+        });
+
+        return NextResponse.json({ 
+            message: 'Successfully added to waitlist',
+            data: {
+                id: newEntry._id,
+                email: newEntry.email
+            }
+        }, { status: 201 });
     } catch (error) {
         console.error('Error adding to waitlist:', error);
         return NextResponse.json(
