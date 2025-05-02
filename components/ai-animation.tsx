@@ -11,15 +11,29 @@ export default function AIAnimation() {
   const [aiText, setAiText] = useState("")
 
   const userMessage = "How do I start a Solana project?"
-  const aiResponse = `First, install the Solana CLI:
-$ sh -c "$(curl -sSfL https://release.solana.com/v1.17.0/install)"
+  const aiResponse = `To start a Solana project:
 
-Then create a new project:
-$ solana-keygen new
-$ mkdir my-solana-project
-$ cd my-solana-project
-$ npm init -y
-$ npm install @solana/web3.js`
+  1. 🔧 Install Rust & Solana CLI
+     $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+     $ sh -c "$(curl -sSfL https://release.solana.com/stable/install)"
+  
+  2. 👜 Create a Solana Wallet
+     $ solana-keygen new
+     $ solana config set --keypair ~/.config/solana/id.json
+  
+  3. 🌐 Connect to Devnet & Get SOL
+     $ solana config set --url https://api.devnet.solana.com
+     $ solana airdrop 2
+  
+  4. 🚀 Set up a new Anchor project
+     $ cargo install --git https://github.com/coral-xyz/anchor anchor-cli --locked
+     $ anchor init my-solana-app
+     $ cd my-solana-app
+  
+  5. 🛠 Build & Deploy to Devnet
+     $ anchor build
+     $ anchor deploy
+  `;  
 
   useEffect(() => {
     // Animation timeline
@@ -205,10 +219,10 @@ $ npm install @solana/web3.js`
           </div>
 
           {/* Chat messages */}
-          <div className="flex-1 overflow-y-auto py-4 space-y-4">
+          <div className="flex-1 overflow-y-auto py-4 space-y-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
             {userText && (
               <div className="flex justify-end">
-                <div className="bg-[#9945FF]/20 border border-[#9945FF]/30 rounded-lg rounded-tr-none p-3 max-w-[80%]">
+                <div className="bg-[#9945FF]/20 border border-[#9945FF]/30 rounded-lg rounded-tr-none p-3 max-w-[80%] break-words">
                   <p className="text-sm text-white">{userText}</p>
                 </div>
               </div>
@@ -216,7 +230,7 @@ $ npm install @solana/web3.js`
 
             {(aiText || aiTyping) && (
               <div className="flex justify-start">
-                <div className="bg-[#14F195]/10 border border-[#14F195]/30 rounded-lg rounded-tl-none p-3 max-w-[80%]">
+                <div className="bg-[#14F195]/10 border border-[#14F195]/30 rounded-lg rounded-tl-none p-3 max-w-[80%] break-words">
                   {aiTyping ? (
                     <div className="flex gap-1 items-center h-6">
                       <div className="h-2 w-2 rounded-full bg-[#14F195] animate-pulse"></div>
@@ -224,7 +238,7 @@ $ npm install @solana/web3.js`
                       <div className="h-2 w-2 rounded-full bg-[#00C2FF] animate-pulse delay-200"></div>
                     </div>
                   ) : (
-                    <pre className="text-sm text-white font-mono whitespace-pre-wrap">{aiText}</pre>
+                    <pre className="text-sm text-white font-mono whitespace-pre-wrap overflow-x-auto">{aiText}</pre>
                   )}
                 </div>
               </div>
