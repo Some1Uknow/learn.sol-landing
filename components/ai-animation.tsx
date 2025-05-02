@@ -207,38 +207,38 @@ export default function AIAnimation() {
   }, [])
 
   return (
-    <div className="relative w-full max-w-md aspect-square">
+    <div className="relative w-full max-w-md aspect-square mx-auto">
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full rounded-xl" />
 
-      <div className="relative z-10 w-full h-full flex flex-col p-4">
-        <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl p-4 h-full flex flex-col">
+      <div className="relative z-10 w-full h-full flex flex-col p-2 sm:p-4">
+        <div className="bg-black/30 backdrop-blur-sm border border-white/10 rounded-xl p-3 sm:p-4 h-full flex flex-col">
           {/* Chat header */}
-          <div className="flex items-center gap-2 pb-3 border-b border-white/10">
+          <div className="flex items-center gap-2 pb-2 sm:pb-3 border-b border-white/10">
             <div className="h-2 w-2 rounded-full bg-[#14F195]"></div>
-            <span className="text-white/80 text-sm font-medium">learn.sol AI Assistant</span>
+            <span className="text-white/80 text-xs sm:text-sm font-medium">learn.sol AI Assistant</span>
           </div>
 
           {/* Chat messages */}
-          <div className="flex-1 overflow-y-auto py-4 space-y-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+          <div className="flex-1 overflow-y-auto py-2 sm:py-4 space-y-3 sm:space-y-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
             {userText && (
               <div className="flex justify-end">
-                <div className="bg-[#9945FF]/20 border border-[#9945FF]/30 rounded-lg rounded-tr-none p-3 max-w-[80%] break-words">
-                  <p className="text-sm text-white">{userText}</p>
+                <div className="bg-[#9945FF]/20 border border-[#9945FF]/30 rounded-lg rounded-tr-none p-2 sm:p-3 max-w-[85%] break-words">
+                  <p className="text-xs sm:text-sm text-white">{userText}</p>
                 </div>
               </div>
             )}
 
             {(aiText || aiTyping) && (
               <div className="flex justify-start">
-                <div className="bg-[#14F195]/10 border border-[#14F195]/30 rounded-lg rounded-tl-none p-3 max-w-[80%] break-words">
+                <div className="bg-[#14F195]/10 border border-[#14F195]/30 rounded-lg rounded-tl-none p-2 sm:p-3 max-w-[85%] break-words">
                   {aiTyping ? (
-                    <div className="flex gap-1 items-center h-6">
-                      <div className="h-2 w-2 rounded-full bg-[#14F195] animate-pulse"></div>
-                      <div className="h-2 w-2 rounded-full bg-[#9945FF] animate-pulse delay-100"></div>
-                      <div className="h-2 w-2 rounded-full bg-[#00C2FF] animate-pulse delay-200"></div>
+                    <div className="flex gap-1 items-center h-5 sm:h-6">
+                      <div className="h-1.5 sm:h-2 w-1.5 sm:w-2 rounded-full bg-[#14F195] animate-pulse"></div>
+                      <div className="h-1.5 sm:h-2 w-1.5 sm:w-2 rounded-full bg-[#9945FF] animate-pulse delay-100"></div>
+                      <div className="h-1.5 sm:h-2 w-1.5 sm:w-2 rounded-full bg-[#00C2FF] animate-pulse delay-200"></div>
                     </div>
                   ) : (
-                    <pre className="text-sm text-white font-mono whitespace-pre-wrap overflow-x-auto">{aiText}</pre>
+                    <pre className="text-xs sm:text-sm text-white font-mono whitespace-pre-wrap overflow-x-auto">{aiText}</pre>
                   )}
                 </div>
               </div>
@@ -246,25 +246,26 @@ export default function AIAnimation() {
           </div>
 
           {/* Chat input */}
-          <div className="border-t border-white/10 pt-3">
-            <div className="flex items-center gap-2 bg-black/30 border border-white/10 rounded-lg px-3 py-2">
+          <div className="border-t border-white/10 pt-2 sm:pt-3">
+            <div className="flex items-center gap-2 bg-black/30 border border-white/10 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2">
               <input
                 type="text"
                 disabled
                 placeholder={userTyping ? "Typing..." : "Ask a question..."}
-                className="bg-transparent text-sm text-white/80 flex-1 outline-none placeholder:text-white/50"
+                className="bg-transparent text-xs sm:text-sm text-white/80 flex-1 outline-none placeholder:text-white/50"
               />
               <button className="text-[#14F195] rounded-md p-1 hover:bg-white/5">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
+                  width="14"
+                  height="14"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
+                  className="sm:w-4 sm:h-4"
                 >
                   <path d="m22 2-7 20-4-9-9-4Z" />
                   <path d="M22 2 11 13" />

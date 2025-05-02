@@ -29,7 +29,7 @@ export default function RoadmapItem({ version, title, description, active = fals
       </div>
 
       <h3 className="text-xl font-bold mb-2 font-space-grotesk">{title}</h3>
-      <p className="text-white/70">{description}</p>
+      <p className="text-white/70 text-sm sm:text-base">{description}</p>
     </div>
   )
 }

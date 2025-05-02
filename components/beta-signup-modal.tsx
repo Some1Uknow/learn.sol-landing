@@ -114,7 +114,7 @@ export function BetaSignupModal({ open, onOpenChange }: BetaSignupModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md w-[95vw] max-w-[95vw] sm:w-auto p-4 sm:p-6">
         <DialogHeader>
           <DialogTitle className="text-center text-2xl">
             Join the Beta
@@ -124,7 +124,7 @@ export function BetaSignupModal({ open, onOpenChange }: BetaSignupModalProps) {
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={onSubmit} className="space-y-4 py-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Input
                 id="firstName"
@@ -159,7 +159,7 @@ export function BetaSignupModal({ open, onOpenChange }: BetaSignupModalProps) {
               <SelectTrigger className="bg-white/10 border-white/10">
                 <SelectValue placeholder="Select your country" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="max-h-[200px]">
                 {countries.map((country) => (
                   <SelectItem key={country} value={country}>
                     {country}

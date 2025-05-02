@@ -15,6 +15,7 @@ import { BetaSignupModal } from "@/components/beta-signup-modal";
 export default function Home() {
   const [betaModalOpen, setBetaModalOpen] = useState(false);
   const [waitlistCount, setWaitlistCount] = useState<number>(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const nftAvatars = [
     "https://i.seadn.io/gae/H8jOCJuQokNqGBpkBN5wk1oZwO7LM8bNnrHCaekV2nKjnCqw6UB5oaH8XyNeBDj6bA_n1mjejzhFQUP3O1NfjFLHr3FOaeHcTOOT?auto=format&dpr=1&w=256",
@@ -55,7 +56,7 @@ export default function Home() {
           </span>
           <div className="h-2 w-2 rounded-full bg-[#14F195] animate-pulse" />
         </div>
-        <div className="flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-4">
           <Button 
             variant="ghost" 
             className="text-white/80 hover:text-white"
@@ -90,20 +91,131 @@ export default function Home() {
             Join the Beta
           </Button>
         </div>
+        
+        {/* Mobile menu button */}
+        <div className="md:hidden flex items-center">
+          <Button
+            variant="ghost"
+            className="text-white/80 hover:text-white mr-2"
+            onClick={() => setBetaModalOpen(true)}
+          >
+            Join Beta
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="border-white/20 hover:bg-white/5"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="4" x2="20" y1="12" y2="12" />
+              <line x1="4" x2="20" y1="6" y2="6" />
+              <line x1="4" x2="20" y1="18" y2="18" />
+            </svg>
+          </Button>
+        </div>
       </nav>
 
+      {/* Mobile menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-sm">
+          <div className="p-6 flex flex-col h-full">
+            <div className="flex justify-between items-center mb-8">
+              <div className="flex items-center gap-2">
+                <span className="text-xl font-bold font-space-grotesk">
+                  learn.sol
+                </span>
+                <div className="h-2 w-2 rounded-full bg-[#14F195] animate-pulse" />
+              </div>
+              <Button
+                variant="outline"
+                size="icon"
+                className="border-white/20 hover:bg-white/5"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M18 6 6 18" />
+                  <path d="m6 6 12 12" />
+                </svg>
+              </Button>
+            </div>
+            <div className="flex flex-col gap-4">
+              <Button 
+                variant="ghost" 
+                className="text-white/80 hover:text-white text-lg justify-start h-12"
+                onClick={() => {
+                  document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
+                  setMobileMenuOpen(false);
+                }}
+              >
+                About
+              </Button>
+              <Button 
+                variant="ghost" 
+                className="text-white/80 hover:text-white text-lg justify-start h-12"
+                onClick={() => {
+                  document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
+                  setMobileMenuOpen(false);
+                }}
+              >
+                Features
+              </Button>
+              <Button 
+                variant="ghost" 
+                className="text-white/80 hover:text-white text-lg justify-start h-12"
+                onClick={() => {
+                  document.getElementById('roadmap')?.scrollIntoView({ behavior: 'smooth' });
+                  setMobileMenuOpen(false);
+                }}
+              >
+                Roadmap
+              </Button>
+              <Button
+                className="bg-gradient-to-r from-[#14F195] to-[#9945FF] hover:opacity-90 text-black mt-4 h-12"
+                onClick={() => {
+                  setBetaModalOpen(true);
+                  setMobileMenuOpen(false);
+                }}
+              >
+                Join the Beta
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Hero Section */}
-      <section id="about" className="container mx-auto py-20 md:py-32 relative z-10">
+      <section id="about" className="container mx-auto py-12 md:py-32 px-4 sm:px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight font-space-grotesk mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight font-space-grotesk mb-6">
               Learn. Build. Ship.{" "}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#14F195] to-[#9945FF]">
                 Faster
               </span>{" "}
               — with AI for Solana.
             </h1>
-            <p className="text-xl text-white/80 mb-8">
+            <p className="text-lg sm:text-xl text-white/80 mb-8">
               AI-powered platform to help you become a Solana dev — faster than
               ever.
             </p>
@@ -154,15 +266,15 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="container mx-auto py-20 relative z-10">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center font-space-grotesk">
+      <section id="features" className="container mx-auto py-12 md:py-20 px-4 sm:px-6 relative z-10">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-center font-space-grotesk">
           Key Features
         </h2>
-        <p className="text-white/70 text-center mb-12 max-w-2xl mx-auto">
+        <p className="text-white/70 text-center mb-8 sm:mb-12 max-w-2xl mx-auto">
           Everything you need to accelerate your Solana development journey
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           <FeatureCard
             icon={<MessageSquare className="h-6 w-6 text-[#14F195]" />}
             title="AI Chat Assistant"
@@ -185,8 +297,8 @@ export default function Home() {
           />
         </div>
 
-        <div className="mt-12 text-center">
-          <div className="inline-block px-4 py-2 bg-white/5 rounded-full text-white/70 border border-white/10">
+        <div className="mt-8 sm:mt-12 text-center">
+          <div className="inline-block px-4 py-2 bg-white/5 rounded-full text-white/70 border border-white/10 text-xs sm:text-sm">
             <span className="flex items-center">
               <span className="h-2 w-2 rounded-full bg-[#14F195] mr-2"></span>
               Coming Soon: In-browser AI IDE for full stack DApp development with Solana, Rust and Anchor
@@ -196,11 +308,11 @@ export default function Home() {
       </section>
 
       {/* Roadmap Section */}
-      <section id="roadmap" className="container mx-auto py-20 relative z-10">
-        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-center font-space-grotesk">
+      <section id="roadmap" className="container mx-auto py-12 md:py-20 px-4 sm:px-6 relative z-10">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-center font-space-grotesk">
           Roadmap
         </h2>
-        <p className="text-white/70 text-center mb-12 max-w-2xl mx-auto">
+        <p className="text-white/70 text-center mb-8 sm:mb-12 max-w-2xl mx-auto">
           Our vision for the future of learn.sol
         </p>
 
@@ -225,9 +337,9 @@ export default function Home() {
       </section>
 
       {/* Email Capture Section */}
-      <section className="container mx-auto py-20 relative z-10">
-        <div className="max-w-3xl mx-auto bg-white/5 rounded-2xl p-8 border border-white/10">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-center font-space-grotesk">
+      <section className="container mx-auto py-12 md:py-20 px-4 sm:px-6 relative z-10">
+        <div className="max-w-3xl mx-auto bg-white/5 rounded-2xl p-6 sm:p-8 border border-white/10">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-center font-space-grotesk">
             Get Early Access
           </h2>
           <p className="text-white/70 text-center mb-4">
@@ -236,7 +348,7 @@ export default function Home() {
 
           <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto items-center justify-center">
             <Button
-              className="bg-gradient-to-r from-[#14F195] to-[#9945FF] hover:opacity-90 text-black px-6 py-3 rounded-lg text-lg font-semibold shadow-lg transform transition-transform hover:scale-105"
+              className="bg-gradient-to-r from-[#14F195] to-[#9945FF] hover:opacity-90 text-black px-6 py-3 w-full sm:w-auto rounded-lg text-lg font-semibold shadow-lg transform transition-transform hover:scale-105"
               onClick={() => setBetaModalOpen(true)}
             >
               Join Waitlist
@@ -247,7 +359,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-white/10 py-12 relative z-10">
-        <div className="container mx-auto">
+        <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             {/* Left side - Logo */}
             <div>
@@ -263,9 +375,9 @@ export default function Home() {
             </div>
 
             {/* Right side - Social & Backed by */}
-            <div className="flex items-center gap-12">
+            <div className="flex flex-col sm:flex-row items-center gap-8">
               {/* Social Links */}
-              <div className="flex items-center gap-4 border-r border-white/10 pr-12">
+              <div className="flex items-center gap-4 sm:border-r border-white/10 sm:pr-8 mb-4 sm:mb-0">
                 <Link
                   href="https://x.com/Some1UKnow25"
                   target="_blank"
@@ -326,7 +438,7 @@ export default function Home() {
               </div>
 
               {/* Backed by section */}
-              <div>
+              <div className="text-center sm:text-left">
                 <p className="text-sm text-white/60 mb-3">Backed by</p>
                 <div className="flex items-center gap-6">
                   <div className="relative h-6 w-24 grayscale hover:grayscale-0 transition-all opacity-70 hover:opacity-100">
