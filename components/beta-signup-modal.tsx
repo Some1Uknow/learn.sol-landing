@@ -12,41 +12,200 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import Select from 'react-select'; // Import react-select
 
 // Add countries data
 const countries = [
-  "United States",
-  "United Kingdom",
-  "Canada",
-  "Australia",
-  "Germany",
-  "France",
-  "Spain",
-  "Italy",
-  "Japan",
-  "China",
-  "India",
-  "Brazil",
-  "Mexico",
-  "South Africa",
-  "Nigeria",
-  "Russia",
-  "South Korea",
-  "Singapore",
-  "New Zealand",
-  "Ireland",
-  "Netherlands",
-  "Sweden",
-  "Norway",
-  "Denmark",
-  "Finland",
+  "United States 🇺🇸",
+  "United Kingdom 🇬🇧",
+  "Canada 🇨🇦",
+  "Australia 🇦🇺",
+  "Germany 🇩🇪",
+  "France 🇫🇷",
+  "Spain 🇪🇸",
+  "Italy 🇮🇹",
+  "Japan 🇯🇵",
+  "China 🇨🇳",
+  "India 🇮🇳",
+  "Brazil 🇧🇷",
+  "Mexico 🇲🇽",
+  "South Africa 🇿🇦",
+  "Nigeria 🇳🇬",
+  "Russia 🇷🇺",
+  "South Korea 🇰🇷",
+  "Singapore 🇸🇬",
+  "New Zealand 🇳🇿",
+  "Ireland 🇮🇪",
+  "Netherlands 🇳🇱",
+  "Sweden 🇸🇪",
+  "Norway 🇳🇴",
+  "Denmark 🇩🇰",
+  "Finland 🇫🇮",
+  "Afghanistan 🇦🇫",
+  "Albania 🇦🇱",
+  "Algeria 🇩🇿",
+  "Andorra 🇦🇩",
+  "Angola 🇦🇴",
+  "Argentina 🇦🇷",
+  "Armenia 🇦🇲",
+  "Austria 🇦🇹",
+  "Azerbaijan 🇦🇿",
+  "Bahamas 🇧🇸",
+  "Bahrain 🇧ahrain",
+  "Bangladesh 🇧🇩",
+  "Barbados 🇧🇧",
+  "Belarus 🇧🇾",
+  "Belgium 🇧🇪",
+  "Belize 🇧🇿",
+  "Benin 🇧🇯",
+  "Bhutan 🇧🇹",
+  "Bolivia 🇧🇴",
+  "Bosnia and Herzegovina 🇧🇦",
+  "Botswana 🇧🇼",
+  "Bulgaria 🇧🇬",
+  "Burkina Faso 🇧🇫",
+  "Burundi 🇧🇮",
+  "Cabo Verde 🇨🇻",
+  "Cambodia 🇰🇭",
+  "Cameroon 🇨🇲",
+  "Central African Republic 🇨🇫",
+  "Chad 🇹🇩",
+  "Chile 🇨🇱",
+  "Colombia 🇨🇴",
+  "Congo 🇨🇬",
+  "Costa Rica 🇨🇷",
+  "Croatia 🇭🇷",
+  "Cuba 🇨🇺",
+  "Cyprus 🇨🇾",
+  "Czech Republic 🇨🇿",
+  "Djibouti 🇩🇯",
+  "Dominica 🇩🇲",
+  "Dominican Republic 🇩🇴",
+  "Ecuador 🇪🇨",
+  "Egypt 🇪🇬",
+  "El Salvador 🇸🇻",
+  "Equatorial Guinea 🇬🇶",
+  "Eritrea 🇪🇷",
+  "Estonia 🇪🇪",
+  "Eswatini 🇸🇿",
+  "Ethiopia 🇪🇹",
+  "Fiji 🇫🇯",
+  "Gabon 🇬🇦",
+  "Gambia 🇬🇲",
+  "Georgia 🇬🇪",
+  "Ghana 🇬🇭",
+  "Greece 🇬🇷",
+  "Grenada 🇬🇩",
+  "Guatemala 🇬🇹",
+  "Guinea 🇬🇳",
+  "Guinea-Bissau 🇬🇼",
+  "Guyana 🇬🇾",
+  "Haiti 🇭🇹",
+  "Honduras 🇭🇳",
+  "Hungary 🇭🇺",
+  "Iceland 🇮🇸",
+  "Indonesia 🇮🇩",
+  "Iran 🇮🇷",
+  "Iraq 🇮🇶",
+  "Israel 🇮🇱",
+  "Ivory Coast 🇨🇮",
+  "Jamaica 🇯🇲",
+  "Jordan 🇯🇴",
+  "Kazakhstan 🇰🇿",
+  "Kenya 🇰🇪",
+  "Kiribati 🇰🇮",
+  "Kuwait 🇰🇼",
+  "Kyrgyzstan 🇰🇬",
+  "Laos 🇱🇦",
+  "Latvia 🇱🇻",
+  "Lebanon 🇱🇧",
+  "Lesotho 🇱🇸",
+  "Liberia 🇱🇷",
+  "Libya 🇱🇾",
+  "Liechtenstein 🇱🇮",
+  "Lithuania 🇱🇹",
+  "Luxembourg 🇱🇺",
+  "Madagascar 🇲🇬",
+  "Malawi 🇲🇼",
+  "Malaysia 🇲🇾",
+  "Maldives 🇲🇻",
+  "Mali 🇲🇱",
+  "Malta 🇲🇹",
+  "Marshall Islands 🇲🇭",
+  "Mauritania 🇲🇷",
+  "Mauritius 🇲🇺",
+  "Micronesia 🇫🇲",
+  "Moldova 🇲🇩",
+  "Monaco 🇲🇨",
+  "Mongolia 🇲🇳",
+  "Montenegro 🇲🇪",
+  "Morocco 🇲🇦",
+  "Mozambique 🇲🇿",
+  "Myanmar 🇲🇲",
+  "Namibia 🇳🇦",
+  "Nauru 🇳🇷",
+  "Nepal 🇳🇵",
+  "Nicaragua 🇳🇮",
+  "Niger 🇳🇪",
+  "North Macedonia 🇲🇰",
+  "Oman 🇴🇲",
+  "Pakistan 🇵🇰",
+  "Palau 🇵🇼",
+  "Panama 🇵🇦",
+  "Papua New Guinea 🇵🇬",
+  "Paraguay 🇵🇾",
+  "Peru 🇵🇪",
+  "Philippines 🇵🇭",
+  "Poland 🇵🇱",
+  "Portugal 🇵🇹",
+  "Qatar 🇶🇦",
+  "Romania 🇷🇴",
+  "Rwanda 🇷🇼",
+  "Saint Kitts and Nevis 🇰🇳",
+  "Saint Lucia 🇱🇨",
+  "Saint Vincent and the Grenadines 🇻🇨",
+  "Samoa 🇼🇸",
+  "San Marino 🇸🇲",
+  "Sao Tome and Principe 🇸🇹",
+  "Saudi Arabia 🇸🇦",
+  "Senegal 🇸🇳",
+  "Serbia 🇷🇸",
+  "Seychelles 🇸🇨",
+  "Sierra Leone 🇸🇱",
+  "Slovakia 🇸🇰",
+  "Slovenia 🇸🇮",
+  "Solomon Islands 🇸🇧",
+  "Somalia 🇸🇴",
+  "South Sudan 🇸🇸",
+  "Sri Lanka 🇱🇰",
+  "Sudan 🇸🇩",
+  "Suriname 🇸🇷",
+  "Switzerland 🇨🇭",
+  "Syria 🇸🇾",
+  "Taiwan 🇹🇼",
+  "Tajikistan 🇹🇯",
+  "Tanzania 🇹🇿",
+  "Thailand 🇹🇭",
+  "Timor-Leste 🇹🇱",
+  "Togo 🇹🇬",
+  "Tonga 🇹🇴",
+  "Trinidad and Tobago 🇹🇹",
+  "Tunisia 🇹🇳",
+  "Turkey 🇹🇷",
+  "Turkmenistan 🇹🇲",
+  "Tuvalu 🇹🇻",
+  "Uganda 🇺🇬",
+  "Ukraine 🇺🇦",
+  "United Arab Emirates 🇦🇪",
+  "Uruguay 🇺🇾",
+  "Uzbekistan 🇺🇿",
+  "Vanuatu 🇻🇺",
+  "Vatican City 🇻🇦",
+  "Venezuela 🇻🇪",
+  "Vietnam 🇻🇳",
+  "Yemen 🇾🇪",
+  "Zambia 🇿🇲",
+  "Zimbabwe 🇿🇼",
 ].sort();
 
 interface BetaSignupModalProps {
@@ -57,6 +216,8 @@ interface BetaSignupModalProps {
 export function BetaSignupModal({ open, onOpenChange }: BetaSignupModalProps) {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const countryOptions = countries.map(country => ({ value: country, label: country })); // Format countries for react-select
+  const [selectedCountry, setSelectedCountry] = useState<any>(null); // State to hold selected country
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -67,7 +228,7 @@ export function BetaSignupModal({ open, onOpenChange }: BetaSignupModalProps) {
       firstName: formData.get("firstName"),
       lastName: formData.get("lastName"),
       email: formData.get("email"),
-      country: formData.get("country"),
+      country: selectedCountry?.value || '', // Use selected country value
     };
 
     try {
@@ -155,18 +316,44 @@ export function BetaSignupModal({ open, onOpenChange }: BetaSignupModalProps) {
             />
           </div>
           <div className="space-y-2">
-            <Select name="country" required>
-              <SelectTrigger className="bg-white/10 border-white/10">
-                <SelectValue placeholder="Select your country" />
-              </SelectTrigger>
-              <SelectContent className="max-h-[200px]">
-                {countries.map((country) => (
-                  <SelectItem key={country} value={country}>
-                    {country}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Select
+              options={countryOptions}
+              value={selectedCountry}
+              onChange={(selectedOption) => setSelectedCountry(selectedOption)}
+              placeholder="Select your country"
+              isSearchable
+              styles={{
+                control: (baseStyles) => ({
+                  ...baseStyles,
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  borderColor: 'rgba(255, 255, 255, 0.1)',
+                }),
+                singleValue: (baseStyles) => ({
+                  ...baseStyles,
+                  color: 'white',
+                }),
+                input: (baseStyles) => ({
+                  ...baseStyles,
+                  color: 'white',
+                }),
+                menu: (baseStyles) => ({
+                  ...baseStyles,
+                  backgroundColor: '#1f1f1f',
+                }),
+                option: (baseStyles, state) => ({
+                  ...baseStyles,
+                  backgroundColor: state.isFocused ? '#2f2f2f' : '#1f1f1f',
+                  color: 'white',
+                  ':active': {
+                    backgroundColor: '#3f3f3f',
+                  },
+                }),
+                placeholder: (baseStyles) => ({
+                  ...baseStyles,
+                  color: '#9ca3af',
+                }),
+              }}
+            />
           </div>
           <div className="flex justify-end">
             <Button
