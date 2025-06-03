@@ -6,7 +6,6 @@
   <p>Your gateway to Solana blockchain development</p>
 
   [![Solana Foundation](https://img.shields.io/badge/Funded%20by-Solana%20Foundation-14F195?style=for-the-badge)](https://solana.com)
-  [![CoinDCX](https://img.shields.io/badge/Funded%20by-CoinDCX-3366FF?style=for-the-badge)](https://coindcx.com)
 
 </div>
 
